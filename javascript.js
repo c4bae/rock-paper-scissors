@@ -18,53 +18,69 @@ function getComputerChoice()
     return choice
 }
 
-function getHumanChoice()
-{
-    choice = prompt("Rock, paper, or scissors?")
-    return choice
-}
+let scoreText = document.querySelector(".score")
+let playerText = document.querySelector(".playerChoice")
+let computerText = document.querySelector(".computerChoice")
+let titleText = document.querySelector(".title")
+let gameisPlaying = true;
+
+const rockButton = document.querySelector('#rock')
+const paperButton = document.querySelector('#paper')
+const scissorsButton = document.querySelector('#scissors')
+
+rockButton.onclick = () => playRound("rock", getComputerChoice())
+paperButton.onclick = () => playRound("paper", getComputerChoice())
+scissorsButton.onclick = () => playRound("scissors", getComputerChoice())
+//previously, you just called the function
 
 function playRound(human, computer)
 {
-    var options = ["rock", "paper", "scissors"]
-    var humanChoice = human.toLowerCase()
-    var computerChoice = computer.toLowerCase()
-    humanChoice = options.indexOf(humanChoice)
-    computerChoice = options.indexOf(computerChoice)
+    if (gameisPlaying) {
+        console.log("round played")
+        var options = ["rock", "paper", "scissors"]
+        var humanChoice = human.toLowerCase()
+        var computerChoice = computer.toLowerCase()
+        humanChoice = options.indexOf(humanChoice)
+        computerChoice = options.indexOf(computerChoice)
 
-    if ((humanChoice == 0 && computerChoice == 2) || (humanChoice == 1 && computerChoice == 0) || (humanChoice == 2 && computerChoice == 1))
-    {
-        humanScore++
-        alert("You won! Your choice was " + human.toLowerCase() + " and computer choice was " + computer.toLowerCase())
-    }
+        playerText.textContent = "Player choice: " + human.toLowerCase()
+        computerText.textContent = "Computer choice: " + computer.toLowerCase()
 
-    else if (humanChoice != computerChoice)
-    {
-        computerScore++;
-        alert("You lost! Your choice was " + human.toLowerCase() + " and computer choice was " + computer.toLowerCase())
-    }
-
-    else 
-    {
-        alert("You tied! Your choice was " + human.toLowerCase() + " and computer choice was " + computer.toLowerCase())
-    }
-
-}
-
-function playGame()
-{
-    for(i=0; i<5; i++)
-    {
-        const humanSelection = getHumanChoice()
-        const computerSelection = getComputerChoice()
-        playRound(humanSelection, computerSelection)
-        alert("The current score is You: " + humanScore + " Computer: " + computerScore)
-
-        if (i == 4)
+        if ((humanChoice == 0 && computerChoice == 2) || (humanChoice == 1 && computerChoice == 0) || (humanChoice == 2 && computerChoice == 1))
         {
-            alert("Final score is You: " + humanScore + " Computer: " + computerScore)
+            humanScore++
+            // alert("You won! Your choice was " + human.toLowerCase() + " and computer choice was " + computer.toLowerCase())
+        }
+
+        else if (humanChoice != computerChoice)
+        {
+            computerScore++;
+            // alert("You lost! Your choice was " + human.toLowerCase() + " and computer choice was " + computer.toLowerCase())
+        }
+
+        else 
+        {
+            // alert("You tied! Your choice was " + human.toLowerCase() + " and computer choice was " + computer.toLowerCase())
+        }
+
+        scoreText.textContent = "Player: " + String(humanScore) + ", Computer: " + String(computerScore);
+
+        if (humanScore == 5) {
+            titleText.textContent = "Player wins!"
+            gameisPlaying = false
+        }
+
+        else if (computerScore == 5) {
+            titleText.textContent = "Computer wins!"
+            gameisPlaying = false
         }
     }
+
 }
 
-playGame()
+
+
+
+
+
+
